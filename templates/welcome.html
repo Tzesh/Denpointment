@@ -1,0 +1,24 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Welcome{% endblock %}
+{% block section %}
+    <h1>Welcome</h1>
+    <h4>Welcome back {{ session["full_name"] }},</h4>
+{% endblock %}
+{% block article %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    {% if session["is_patient"] %}
+        <p>You can use appointment menu to:</p>
+        <ol>
+            <li>Book an appointment</li>
+            <li>To see your past appointments</li>
+            <li>To see your upcoming appointments</li>
+        </ol>
+    {% else %}
+        <p>You have to:</p>
+        <ol>
+            <li>Add your address information</li>
+            <li>Add your telephone number to use Denpointment system</li>
+        </ol>
+        <p>You can refer to <a href="./profile">profile</a> page to do these steps.</p>
+    {% endif %}
+{% endblock %}

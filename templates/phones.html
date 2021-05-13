@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="The latest sample news, Sample News">
+    <meta name="subject" content="The latest sample news, Sample News">
+    <meta name="keywords" content="Sample, News, Latest, Sport, Travel, Culture">
+    <meta name="author" content="Sample News">
+    <meta name="language" content="en">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="robots" content="index"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Denpointment | Register</title>
+    <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../static/css/style.css">
+</head>
+
+<body class="bg-black">
+
+<nav class="navbar navbar-expand-lg navbar-light bg-white">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Denpointment</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" aria-current="page" href="../member-area/">Home</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                       data-bs-toggle="dropdown" aria-expanded="false">
+                        Appointments
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <li><a class="dropdown-item" href="./book-an-appointment">Book an appointment</a></li>
+                        <li><a class="dropdown-item" href="./past-appointments">Past appointments</a></li>
+                        <li><a class="dropdown-item" href="./upcoming-appointments">Upcoming appointments</a></li>
+                    </ul>
+                </li>
+                {% if session["is_dentist"] %}
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Treatments
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="./member-area/add-a-treatment">Add a treatment</a></li>
+                            <li><a class="dropdown-item" href="./member-area/past-treatments">Past treatments</a></li>
+                            <li><a class="dropdown-item" href="./member-area/upcoming-treatments">Upcoming
+                                treatments</a></li>
+                            >
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                           data-bs-toggle="dropdown" aria-expanded="false">
+                            Holidays
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <li><a class="dropdown-item" href="./member-area/add-a-holiday">Add a holiday</a></li>
+                            <li><a class="dropdown-item" href="./member-area/past-holidays">Past holidays</a></li>
+                            <li><a class="dropdown-item" href="./member-area/upcoming-holidays">Upcoming holidays</a>
+                            </li>
+                        </ul>
+                    </li>
+                {% endif %}
+                <li class="nav-item">
+                    <a class="nav-link" href="./profile">My profile</a>
+                </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="../logout">Logout</a>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="main-background pt-5 pb-5">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-sm-12 col-md-9 col-xl-6">
+                <div class="login p-5">
+                    <section>
+                        <h1>Your profile:</h1>
+                        <h4>Welcome {{ session["full_name"] }},</h4>
+                        <h5>SSN: {{ person.ssn }}</h5>
+                        <h5>Email: {{ person.email }}</h5>
+                        <h5>Gender: {{ person.gender }}</h5>
+                        <h5>Birth date: {{ person.birth_date }}</h5>
+                        <h5>Phones:</h5>
+                        {% if phones > 0 %}
+                            <ul class="list-group">
+                                {% for phone in phones %}
+                                <li class="list-group-item">{{ phone.contact_number }}</li>
+                            </ul>
+                            {% else %}
+                            <p>You don't have a phone number logged in yet.</p>
+                        {% endif %}
+                        <h5>Addresses:</h5>
+                        {% if addresses > 0 %}
+                            <ul class="list-group">
+                                {% for address in addresses %}
+                                <li class="list-group-item">{{ address.contact_number }}</li>
+                            </ul>
+                            {% else %}
+                            <p>You don't have an address logged in yet.</p>
+                        {% endif %}
+                    </section>
+                    <article class="text-center">
+                        {% from "includes/_formhelpers.html" import render_field %}
+                        {% if session["is_patient"] %}
+                            <p>You can use appointment menu to:</p>
+                            <ol>
+                                <li>Book an appointment</li>
+                                <li>To see your past appointments</li>
+                                <li>To see your upcoming appointments</li>
+                            </ol>
+                        {% else %}
+                            <p>You have to:</p>
+                            <ol>
+                                <li>Add your address information</li>
+                                <li>Add your telephone number</li>
+                                <li>And also verify your e-mail to use denpointment system.</li>
+                            </ol>
+                            <p>You can refer to <a href="My Profile">My profile</a> page to do these steps.</p>
+                        {% endif %}
+                    </article>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<footer class="container bg-black pt-4 pb-4">
+    <div class="row">
+        <div class="col-sm-12 col-xl-4">
+            <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#multiCollapse1" aria-expanded="true" aria-controls="multiCollapse1">About
+                us
+            </button>
+        </div>
+        <div class="col-sm-12 col-xl-4">
+            <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#multiCollapse2" aria-expanded="true" aria-controls="multiCollapse2">Contact
+                us
+            </button>
+        </div>
+        <div class="col-sm-12 col-xl-4">
+            <button class="btn btn-primary w-100" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#multiCollapse3" aria-expanded="true" aria-controls="multiCollapse3">Designed by
+                Tzesh
+            </button>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12 col-xl-4 multi-collapse show" id="multiCollapse1">
+            <div class="card card-body">
+                <h3>About us</h3>
+                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nostrum atque possimus perferendis
+                    magnam?
+                    Odit pariatur minima expedita aut dolorum numquam incidunt iusto accusamus esse amet.</p>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-4 multi-collapse show" id="multiCollapse2">
+            <div class="card card-body">
+                <h3>Contact us</h3>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequatur temporibus doloribus,
+                    aspernatur, laboriosam beatae voluptates dolorum, velit doloremque vitae cumque totam fuga nihil
+                    nostrum dolor.</p>
+                <p>E-mail: mail@ugurdindar.com</p>
+                <p><a href=""><i class="fab fa-facebook-f"></i></a><a href=""><i class="fab fa-instagram"></i></a><a
+                        href=""><i class="fab fa-twitter"></i></a></p>
+            </div>
+        </div>
+        <div class="col-sm-12 col-xl-4 multi-collapse show" id="multiCollapse3">
+            <div class="card card-body">
+                <h3>Designed by Tzesh</h3>
+                <p>Designed by <a href="https://www.ugurdindar.com" style="color: gray;">Uğur Dindar (Tzesh)</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+
+<script src="https://kit.fontawesome.com/83fdf682f5.js" crossorigin="anonymous"></script>
+<script src="../static/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

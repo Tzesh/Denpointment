@@ -1,0 +1,23 @@
+{% extends "_outer_layout.html" %}
+{% block title %}Register{% endblock %}
+{% block section %}
+    <h1>Denpointment</h1>
+    <h4>Please fullfil the necessary information to register.</h4>
+{% endblock %}
+{% block article %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method=post>
+        <dl>
+            {{ render_field(form.ssn, class="form-control mb-3 w-100") }}
+            {{ render_field(form.birth_date, class="form-control mb-3 w-100", type="date",
+                                    value="2009-11-1") }}
+            {{ render_field(form.first_name, class="form-control mb-3 w-100") }}
+            {{ render_field(form.last_name, class="form-control mb-3 w-100") }}
+            {{ render_field(form.gender, class="form-control mb-3 w-100") }}
+            {{ render_field(form.email, class="form-control mb-3 w-100") }}
+            {{ render_field(form.password, class="form-control mb-3 w-100") }}
+            {{ render_field(form.confirm, class="form-control mb-3 w-100") }}
+        </dl>
+        <input type=submit value=Register class="btn btn-outline-primary w-100">
+    </form>
+{% endblock %}

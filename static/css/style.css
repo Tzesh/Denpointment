@@ -1,0 +1,65 @@
+/* CSS of Denpointment System */
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.bg-black {
+	background-color: #333333;
+}
+
+/* Header */
+
+
+
+/* Main */
+
+.main-background {
+	position: relative;
+	background-image: url(../img/background.jpg);
+	background-size: cover;
+	background-position: center;
+	height: 100%;
+	width: 100%;
+	opacity: 1;
+	z-index: 1;
+}
+
+.white-box {
+    margin-top: 5%;
+    background-color: #ffffff;
+}
+
+
+/* Footer */
+
+footer {
+	color: #333333
+}
+
+footer h3 {
+	font-size: 1.4rem;
+	font-variant: small-caps;
+	font-family: 'Mukta', sans-serif;
+}
+
+footer p {
+	font-size: 0.9rem;
+	color: #333333;
+}
+
+footer i {
+	font-size: 1.5rem;
+	padding: 0.2rem;
+}
+
+footer a {
+	text-decoration: none;
+	color: #333333;
+	transition: all 0.5s ease;
+}
+
+footer a:hover {
+	color: #d36d00;
+}

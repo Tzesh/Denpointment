@@ -1,0 +1,17 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Change email{% endblock %}
+{% block section %}
+    <h1>Change email</h1>
+    <p>Please enter a valid phone number to take place of existing one.</p>
+{% endblock %}
+{% block article %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method=post class="text-center form-floating">
+        <dl>
+            {{ render_field(form.email, class="form-control mb-3 w-100") }}
+            {{ render_field(form.password, class="form-control mb-3 w-100") }}
+            {{ render_field(form.confirm, class="form-control mb-3 w-100") }}
+        </dl>
+        <input type=submit value=Change class="btn btn-outline-primary w-100">
+    </form>
+{% endblock %}

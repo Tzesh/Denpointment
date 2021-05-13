@@ -1,0 +1,18 @@
+{% extends "_outer_layout.html" %}
+{% block title %}Login{% endblock %}
+{% block section %}
+    <h1>Denpointment</h1>
+    <h4>Get your dentist appointment online!</h4>
+{% endblock %}
+{% block article %}
+    {% include "includes/_messages.html" %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method=post>
+        <dl>
+            {{ render_field(form.email, class="form-control mb-3 w-100") }}
+            {{ render_field(form.password, class="form-control mb-3 w-100") }}
+        </dl>
+        <input type=submit value=Login class="btn btn-outline-primary w-100 mb-3">
+        <p><a href="./register" class="btn btn-outline-primary w-100">Register now!</a></p>
+    </form>
+{% endblock %}
