@@ -2,7 +2,8 @@ from flask import Flask, render_template, flash, redirect, url_for, session, req
 from flask_mysqldb import MySQL
 from passlib.handlers.sha2_crypt import sha256_crypt
 from forms import LoginForm, RegistrationForm, PhoneForm, AddressForm, ChangePasswordForm, ChangeEmailForm
-from utils import login_required, check_is_patient, check_is_dentist, check_dentist, check_patient
+from utils import login_required, patient_required, dentist_required, check_is_patient, check_is_dentist
+from datetime import datetime
 
 app = Flask(__name__)
 app.secret_key = "too_secret_to_reveal"
@@ -166,6 +167,7 @@ def change_password():
             flash("Your password is wrong.", "danger")
             return redirect(url_for("profile"))
     return render_template("change-password.html", form=form)
+
 
 # Profile -> Change Email
 @app.route('/change-email', methods=["GET", "POST"])
@@ -385,6 +387,50 @@ def modify_phone(number):
         else:
             flash(message="Please re-correct your phone number.", category="danger")
             return render_template("modify-phone.html", form=form)
+
+
+# Appointments -> My Appointments
+@app.route('/appointments', methods=["GET", "POST"])
+@login_required
+@patient_required
+def my_appointments():
+    cursor = mysql.connection.cursor()
+    query = "SELECT * FROM patients WHERE patient_ssn = %s"
+    cursor.execute(query, (session["ssn"],))
+    person = cursor.fetchone()
+    patient_id = person["patient_id"]
+
+    month = datetime.today().month
+    day = datetime.today().weekday()
+    year = datetime.today().year
+
+    query = """
+    SELECT * FROM appointments
+    RIGHT OUTER JOIN dentists
+    ON appointments.d_id = dentists.dentist_id
+    RIGHT OUTER JOIN persons
+    ON persons.ssn = dentists.dentist_ssn
+    WHERE (p_id = %s and 'month' = %s and 'day' <= %s and 'year' = %s)
+    OR (p_id = %s and 'month' < %s and 'year' = %s)
+    OR (p_id = %s and 'year' < %s)"""
+    cursor.execute(query, (patient_id, month, day, year, patient_id, month, year, patient_id, year))
+    past_appointments = cursor.fetchall()
+
+    query = """
+    SELECT * FROM appointments
+    RIGHT OUTER JOIN dentists
+    ON appointments.d_id = dentists.dentist_id
+    RIGHT OUTER JOIN persons
+    ON persons.ssn = dentists.dentist_ssn
+    WHERE (p_id = %s and 'month' = %s and 'day' > %s and 'year' = %s)
+    OR (p_id = %s and 'month' > %s and 'year' = %s)
+    OR (p_id = %s and 'year' > %s)"""
+    cursor.execute(query, (patient_id, month, day, year, patient_id, month, year, patient_id, year))
+    upcoming_appointments = cursor.fetchall()
+
+    cursor.close()
+    return render_template("appointments.html", past_appointments=past_appointments,
+                           upcoming_appointments=upcoming_appointments)
 
 
 # Logout
