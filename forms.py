@@ -49,6 +49,15 @@ class AddressForm(Form):
                                                                      message="Invalid input please enter only digits")])
 
 
+# Chronic Disease Form
+class ChronicDiseaseForm(Form):
+    chronic_disease = StringField("Chronic disease", validators=[validators.length(min=3, max=50),
+                                                                 validators.data_required(
+                                                                     message="Please enter your chronic disease"),
+                                                                 validators.Regexp(r'^[\w.@+-]+$',
+                                                                                   message="Please do not use spaces.")])
+
+
 # Change Password Form
 class ChangePasswordForm(Form):
     old_password = PasswordField("Password", validators=[

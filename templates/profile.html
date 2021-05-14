@@ -11,6 +11,30 @@
     <a href="./change-password" class="btn btn-outline-primary mb-3">Change your password</a>
     <h5>Gender: {{ person.gender }}</h5>
     <h5>Birth date: {{ person.birth_date }}</h5>
+    <h5>Chronic diseases:</h5>
+    <table class="table">
+        <thead>
+        <tr>
+            <th scope="col">Chronic Disease</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% if chronic_diseases %}
+            {% for chronic in chronic_diseases %}
+                <tr>
+                    <td scope="row">{{ chronic.chronic_disease }}</td>
+                    <td><a href="./delete-chronic-disease/{{ chronic.chronic_disease }}"
+                           class="btn btn-danger">Delete</a></td>
+                </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="6">You don't have a chronic disease logged in yet.</td>
+            </tr>
+        {% endif %}
+        </tbody>
+    </table>
+    <p><a href="./add-chronic-disease" class="btn btn-outline-primary mb-3">Add a chronic disease</a></p>
     <h5>Phones:</h5>
     <table class="table">
         <thead>

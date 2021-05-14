@@ -1,7 +1,8 @@
 from flask import Flask, render_template, flash, redirect, url_for, session, request
 from flask_mysqldb import MySQL
 from passlib.handlers.sha2_crypt import sha256_crypt
-from forms import LoginForm, RegistrationForm, PhoneForm, AddressForm, ChangePasswordForm, ChangeEmailForm
+from forms import LoginForm, RegistrationForm, PhoneForm, AddressForm, ChangePasswordForm, ChangeEmailForm, \
+    ChronicDiseaseForm
 from utils import login_required, patient_required, dentist_required, check_is_patient, check_is_dentist
 from datetime import datetime
 
@@ -125,6 +126,10 @@ def profile():
     is_phone_exist = cursor.execute(query, (session["ssn"],))
     phones = cursor.fetchall()
 
+    query = "SELECT * FROM chronic_diseases WHERE chronic_ssn = %s"
+    cursor.execute(query, (session["ssn"],))
+    chronic_diseases = cursor.fetchall()
+
     if is_address_exist and is_phone_exist and not session["is_patient"]:
         query = "INSERT INTO patients(patient_ssn) VALUES (%s)"
         cursor.execute(query, (session["ssn"],))
@@ -135,7 +140,8 @@ def profile():
         return render_template("profile.html", person=person, addresses=addresses, phones=phones)
 
     cursor.close()
-    return render_template("profile.html", person=person, addresses=addresses, phones=phones)
+    return render_template("profile.html", person=person, addresses=addresses, phones=phones,
+                           chronic_diseases=chronic_diseases)
 
 
 # Profile -> Change Password
@@ -294,6 +300,47 @@ def modify_address(address_id):
         else:
             flash(message="Please re-correct your address information.", category="danger")
             return render_template("modify-address.html", form=form)
+
+
+# Profile -> Addresses -> Delete
+@app.route('/delete-chronic-disease/<string:chronic_disease>')
+@login_required
+def delete_chronic_disease(chronic_disease):
+    cursor = mysql.connection.cursor()
+    query = "SELECT * FROM chronic_diseases WHERE chronic_ssn = %s and chronic_disease = %s"
+    result = cursor.execute(query, (session["ssn"], chronic_disease))
+    if result:
+        query = "DELETE FROM chronic_diseases WHERE chronic_ssn = %s and chronic_disease = %s"
+        cursor.execute(query, (session["ssn"], chronic_disease))
+        mysql.connection.commit()
+        flash(message="Chronic disease information has been deleted from your profile successfully.",
+              category="success")
+        return redirect(url_for("profile"))
+    else:
+        flash(message="There's not such chronic disease stored in your profile.", category="danger")
+        return redirect(url_for("profile"))
+
+
+# Profile -> Addresses -> Add
+@app.route('/add-chronic-disease', methods=["GET", "POST"])
+@login_required
+def add_chronic_disease():
+    form = ChronicDiseaseForm(request.form)
+    if request.method == "POST" and form.validate():
+        chronic_disease = form.chronic_disease.data
+        cursor = mysql.connection.cursor()
+        query = "SELECT * FROM chronic_diseases WHERE chronic_ssn = %s"
+        is_registered = cursor.execute(query, (session["ssn"],)) > 0
+        if is_registered:
+            flash(message="This chronic disease has been already associated with your profile.", category="danger")
+            return render_template("add-chronic-disease.html", form=form)
+        else:
+            query = "INSERT INTO chronic_diseases(chronic_disease, chronic_ssn) VALUES (%s, %s)"
+            cursor.execute(query, (chronic_disease, session["ssn"]))
+            mysql.connection.commit()
+            flash(message="Chronic disease information has been registered successfully.", category="success")
+            return redirect(url_for("profile"))
+    return render_template("add-chronic-disease.html", form=form)
 
 
 # Profile -> Phones -> Add
