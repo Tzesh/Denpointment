@@ -1,0 +1,38 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Upcoming appointments{% endblock %}
+{% block section %}
+    <h1>Upcoming Appointments</h1>
+{% endblock %}
+{% block article %}
+    <h4>Welcome {{ session["full_name"] }},</h4>
+    <h5>Upcoming Appointments:</h5>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Patient</th>
+                <th scope="col">Room</th>
+                <th scope="col">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if upcoming_appointments %}
+                {% for appointment in upcoming_appointments %}
+                    <tr>
+                        <td scope="row"><a
+                                href="./patient-profile-{{ appointment.patient_id }}">{{ appointment.first_name }} {{ appointment.last_name }}</a>
+                        </td>
+                        <td scope="row">{{ appointment.room }}</td>
+                        <td scope="row">Hour: {{ appointment.hour }}
+                            on {{ appointment.day }}/{{ appointment.month }}/{{ appointment.year }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">You don't have an appointment yet.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

@@ -13,6 +13,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="icon" href="{{ url_for('static', filename='img/tooth.png') }}" type="image/x-icon" />
     <title>
         Denpointment | {% block title %}{% endblock %}
     </title>
@@ -21,10 +22,10 @@
 <body class="bg-black">
 {% include "./includes/_navbar.html" %}
 
-<main class="main-background pt-5 pb-5">
+<main class="main-background p-5">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-sm-12 col-md-9 col-xl-6">
+        <div class="row">
+            <div class="col-sm-12 col-md-10 col-xl-8 p-5">
                 <div class="white-box p-5">
                     <section>
                         {% include "./includes/_messages.html" %}

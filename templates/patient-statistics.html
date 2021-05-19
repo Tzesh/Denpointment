@@ -1,0 +1,37 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Patient Statistics{% endblock %}
+{% block section %}
+    <h1>Patient Statistics</h1>
+{% endblock %}
+{% block article %}
+    <h4>Welcome {{ session["full_name"] }},</h4>
+    <h5>Most common female complaint: {{ female_complaint.complaint }}</h5>
+    <h5>Most common male complaint: {{ male_complaint.complaint }}</h5>
+    <h5>Average tooth decay treatment cost: {{ tooth_decay_treatment_avg_cost.magnitude }}</h5>
+    <h5>Most common complaint in the last month: {{ most_common_complaint_last_month.complaint }}</h5>
+    <h5>Most expensive treatment so far and it's details:</h5>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Dentist</th>
+                <th scope="col">Patient</th>
+                <th scope="col">Charge</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if most_expensive_treatment %}
+                <tr>
+                    <td scope="row">{{ most_expensive_treatment_details.dentist_first_name }} {{ most_expensive_treatment_details.dentist_last_name }}</td>
+                    <td scope="row">{{ most_expensive_treatment_details.patient_first_name }} {{ most_expensive_treatment_details.patient_last_name }}</td>
+                    <td scope="row">{{ most_expensive_treatment.charge }}</td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="3">There isn't a treatment yet.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

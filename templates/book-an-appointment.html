@@ -1,0 +1,23 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Book an appointment{% endblock %}
+{% block section %}
+    <h1>Book an appointment</h1>
+{% endblock %}
+{% block article %}
+    <h4>Welcome {{ session["full_name"] }},</h4>
+    <h5>You can book an appointment if you don't have an upcoming one.</h5>
+    <p>Please make sure that you are getting an appointment which suits you, you can only get 1 appointment at a
+        time.</p>
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method=post>
+        <dl>
+            {{ render_field(form.dentist, class="form-control mb-3 w-100") }}
+            {{ render_field(form.date, class="form-control mb-3 w-100", type="date") }}
+            {{ render_field(form.hour, class="form-control mb-3 w-100") }}
+        </dl>
+         <input type=submit value=Search class="btn btn-outline-primary w-100">
+    </form>
+
+
+
+{% endblock %}

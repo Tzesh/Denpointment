@@ -1,0 +1,15 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Search Treatment{% endblock %}
+{% block section %}
+    <h1>Searching Treatments</h1>
+    <p>You can only select a date to look for treatments.</p>
+{% endblock %}
+{% block article %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method=post class="text-center form-floating">
+        <dl>
+            {{ render_field(form.date, class="form-control mb-3 w-100", type="date") }}
+        </dl>
+        <input type=submit value=Search class="btn btn-outline-primary w-100">
+    </form>
+{% endblock %}

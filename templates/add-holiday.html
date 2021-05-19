@@ -1,0 +1,16 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Add Holiday{% endblock %}
+{% block section %}
+    <h1>Adding holiday</h1>
+    <p>You can only rest at 3 days in 1 month</p>
+{% endblock %}
+{% block article %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method=post class="text-center form-floating">
+        <dl>
+            {{ render_field(form.date, class="form-control mb-3 w-100", type="date") }}
+            {{ render_field(form.reason, class="form-control mb-3 w-100") }}
+        </dl>
+        <input type=submit value=Add class="btn btn-outline-primary w-100">
+    </form>
+{% endblock %}

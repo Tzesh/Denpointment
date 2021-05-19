@@ -1,0 +1,19 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Modify Treatment{% endblock %}
+{% block section %}
+    <h1>Modifying existing treatment</h1>
+    <p>Please fulfill the necessary fields to modify the treatment.</p>
+    <p>Note: Treatments can be only modified in the day which they've done.</p>
+{% endblock %}
+{% block article %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method=post class="text-center form-floating">
+        <dl>
+            {{ render_field(form.action, class="form-control mb-3 w-100") }}
+            {{ render_field(form.complaint, class="form-control mb-3 w-100") }}
+            {{ render_field(form.charge, class="form-control mb-3 w-100") }}
+            {{ render_field(form.description, class="form-control mb-3 w-100") }}
+        </dl>
+        <input type=submit value=Modify class="btn btn-outline-primary w-100">
+    </form>
+{% endblock %}

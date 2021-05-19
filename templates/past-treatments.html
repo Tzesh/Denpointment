@@ -1,0 +1,89 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Past Treatments{% endblock %}
+{% block section %}
+    <h1>Past Treatments</h1>
+{% endblock %}
+{% block article %}
+    <h4>Welcome {{ session["full_name"] }},</h4>
+    <a href="./search-past-treatments"
+       class="btn btn-primary w-100">Search treatments</a>
+    <h5>Past Treatments:</h5>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Patient</th>
+                <th scope="col">Room</th>
+                <th scope="col">Date</th>
+                <th scope="col">Action</th>
+                <th scope="col">Complaint</th>
+                <th scope="col">Description</th>
+                <th scope="col">Medicines</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if past_treatments %}
+                {% for treatment in past_treatments %}
+                    {% if treatment.action %}
+                        <tr>
+                            <td scope="row"><a
+                                    href="./patient-profile-{{ treatment.patient_id }}">{{ treatment.first_name }} {{ treatment.last_name }}</a>
+                            </td>
+                            <td scope="row">{{ treatment.room }}</td>
+                            <td scope="row">{{ treatment.hour }} {{ treatment.day }}/{{ treatment.month }}/{{ treatment.year }}</td>
+                            <td scope="row">{{ treatment.action }}</td>
+                            <td scope="row">{{ treatment.complaint }}</td>
+                            {% if treatment.description %}
+                                <td scope="row">{{ treatment.description }}</td>
+                            {% else %}
+                                <td scope="row">N/A</td>
+                            {% endif %}
+                            {% if treatment.medicine_name %}
+                                <td scope="row"><a href="./treatment-medicines-{{ treatment.treatment_id }}"
+                                                   class="btn btn-primary">Medicines</a></td>
+                            {% else %}
+                            {% endif %}
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="7">You don't have a treatment yet.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <h5>Past Appointments:</h5>
+    <p>These are the appointments that patients didn't come to.</p>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Patient</th>
+                <th scope="col">Room</th>
+                <th scope="col">Date</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if past_treatments %}
+                {% for treatment in past_treatments %}
+                    {% if not treatment.action %}
+                        <tr>
+                            <td scope="row"><a
+                                    href="./patient-profile-{{ treatment.patient_id }}">{{ treatment.first_name }} {{ treatment.last_name }}</a>
+                            </td>
+                            <td scope="row">{{ treatment.room }}</td>
+                            <td scope="row">{{ treatment.hour }} {{ treatment.day }}/{{ treatment.month }}/{{ treatment.year }}</td>
+                        </tr>
+                    {% endif %}
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="4">You don't have an appointment yet.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

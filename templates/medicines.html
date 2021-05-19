@@ -1,0 +1,27 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Medicines{% endblock %}
+{% block section %}
+    <h1>Medicines</h1>
+{% endblock %}
+{% block article %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Medicine</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for medicine in medicine_names %}
+                <tr>
+                    <td scope="row">{{ medicine.medicine_name }}</td>
+                    {% if session["is_dentist"] %}
+                        <td><a href="./delete-medicine-{{ treatment_id }}-{{ medicine.medicine_id }}"
+                               class="btn btn-danger">Delete</a></td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

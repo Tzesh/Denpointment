@@ -1,0 +1,14 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Add Medicine{% endblock %}
+{% block section %}
+    <h1>Adding medicine to a treatment</h1>
+{% endblock %}
+{% block article %}
+    {% from "includes/_formhelpers.html" import render_field %}
+    <form method=post class="text-center form-floating">
+        <dl>
+            {{ render_field(form.medicine_name, class="form-control mb-3 w-100") }}
+        </dl>
+        <input type=submit value=Add class="btn btn-outline-primary w-100">
+    </form>
+{% endblock %}

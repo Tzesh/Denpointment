@@ -1,0 +1,71 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Holidays{% endblock %}
+{% block section %}
+    <h1>Your profile</h1>
+{% endblock %}
+{% block article %}
+    <h4>Welcome {{ session["full_name"] }},</h4>
+    <h5>Upcoming Holidays:</h5>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Reason</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if upcoming_holidays %}
+                {% for holiday in upcoming_holidays %}
+                    <tr>
+                        <td scope="row">{{ holiday.rest_date }}</td>
+                        {% if not holiday.reason %}
+                            <td scope="row">No reason specified.</td>
+                        {% else %}
+                            <td scope="row">{{ holiday.reason }}</td>
+                        {% endif %}
+                        {% if holiday.rest_date %}
+                            <td><a href="./delete-holiday/{{ holiday.holiday_id }}"
+                                   class="btn btn-danger">Delete</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2">You don't have an upcoming holiday yet.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <a href="./add-holiday" class="btn btn-outline-primary mb-3">Add a holiday</a>
+    <h5>Past Holidays:</h5>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Date</th>
+                <th scope="col">Reason</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if past_holidays %}
+                {% for holiday in past_holidays %}
+                    <tr>
+                        <td scope="row">{{ holiday.rest_date }}</td>
+                        {% if not holiday.reason %}
+                            <td scope="row">No reason specified.</td>
+                        {% else %}
+                            <td scope="row">{{ holiday.reason }}</td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="2">You don't have a past holiday yet.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}

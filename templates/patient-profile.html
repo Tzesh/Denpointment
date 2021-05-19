@@ -1,16 +1,13 @@
 {% extends "_inner_layout.html" %}
-{% block title %}Profile{% endblock %}
+{% block title %}Patient Profile{% endblock %}
 {% block section %}
-    <h1>Your profile</h1>
+    <h1>{{ patient.first_name }} {{ patient.last_name }}</h1>
 {% endblock %}
 {% block article %}
-    <h4>Welcome {{ session["full_name"] }},</h4>
-    <h5>SSN: {{ person.ssn }}</h5>
-    <h5>Email: {{ person.email }}</h5>
-    <a href="./change-email" class="btn btn-outline-primary mb-3">Change your email</a>
-    <a href="./change-password" class="btn btn-outline-primary mb-3">Change your password</a>
-    <h5>Gender: {{ person.gender }}</h5>
-    <h5>Birth date: {{ person.birth_date }}</h5>
+    <h5>SSN: {{ patient.ssn }}</h5>
+    <h5>Email: {{ patient.email }}</h5>
+    <h5>Gender: {{ patient.gender }}</h5>
+    <h5>Birth date: {{ patient.birth_date }}</h5>
     <h5>Chronic diseases:</h5>
     <div class="table-responsive">
         <table class="table">
@@ -24,19 +21,16 @@
                 {% for chronic in chronic_diseases %}
                     <tr>
                         <td scope="row">{{ chronic.chronic_disease }}</td>
-                        <td><a href="./delete-chronic-disease/{{ chronic.chronic_disease }}"
-                               class="btn btn-danger">Delete</a></td>
                     </tr>
                 {% endfor %}
             {% else %}
                 <tr>
-                    <td colspan="6">You don't have a chronic disease logged in yet.</td>
+                    <td colspan="6">Doesn't have a chronic disease logged in yet.</td>
                 </tr>
             {% endif %}
             </tbody>
         </table>
     </div>
-    <p><a href="./add-chronic-disease" class="btn btn-outline-primary mb-3">Add a chronic disease</a></p>
     <h5>Phones:</h5>
     <div class="table-responsive">
         <table class="table">
@@ -50,21 +44,12 @@
                 {% for phone in phones %}
                     <tr>
                         <td scope="row">{{ phone.contact_number }}</td>
-                        <td scope="row"><a href="./modify-phone/{{ phone.contact_number }}"
-                                           class="btn btn-danger">Update</a></td>
-                        <td scope="row"><a href="./delete-phone/{{ phone.contact_number }}"
-                                           class="btn btn-danger">Delete</a></td>
                     </tr>
                 {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="6">You don't have a phone logged in yet.</td>
-                </tr>
             {% endif %}
             </tbody>
         </table>
     </div>
-    <a href="./add-phone" class="btn btn-outline-primary mb-3">Add a phone number</a>
     <h5>Addresses:</h5>
     <div class="table-responsive">
         <table class="table">
@@ -82,19 +67,10 @@
                         <td scope="row">{{ address.city }}</td>
                         <td scope="row">{{ address.street }}</td>
                         <td scope="row">{{ address.zip_code }}</td>
-                        <td><a href="./modify-address/{{ address.address_id }}"
-                               class="btn btn-danger">Update</a></td>
-                        <td><a href="./delete-address/{{ address.address_id }}"
-                               class="btn btn-danger">Delete</a></td>
                     </tr>
                 {% endfor %}
-            {% else %}
-                <tr>
-                    <td colspan="6">You don't have an address logged in yet.</td>
-                </tr>
             {% endif %}
             </tbody>
         </table>
     </div>
-    <p><a href="./add-address" class="btn btn-outline-primary mb-3">Add an address</a></p>
 {% endblock %}

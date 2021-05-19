@@ -6,55 +6,71 @@
 {% block article %}
     <h4>Welcome {{ session["full_name"] }},</h4>
     <h5>Upcoming Appointments:</h5>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Dentist</th>
-            <th scope="col">Room</th>
-            <th scope="col">Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% if upcoming_appointments %}
-            {% for appointment in upcoming_appointments %}
-                <tr>
-                    <td scope="row">{{ appointment.first_name }} {{ appointment.last_name }}</td>
-                    <td scope="row">{{ appointment.room }}</td>
-                    <td scope="row">Hour: {{ appointment.hour }}
-                        on {{ appointment.day }}/{{ appointment.month }}/{{ appointment.year }}</td>
-                </tr>
-            {% endfor %}
-        {% else %}
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
             <tr>
-                <td colspan="3">You don't have an appointment yet.</td>
+                <th scope="col">Dentist</th>
+                <th scope="col">Room</th>
+                <th scope="col">Date</th>
             </tr>
-        {% endif %}
-        </tbody>
-    </table>
-    <h5>Past Appointments:</h5>
-    <table class="table">
-        <thead>
-        <tr>
-            <th scope="col">Dentist</th>
-            <th scope="col">Room</th>
-            <th scope="col">Date</th>
-        </tr>
-        </thead>
-        <tbody>
-        {% if past_appointments %}
-            {% for appointment in past_appointments %}
+            </thead>
+            <tbody>
+            {% if upcoming_appointments %}
+                {% for appointment in upcoming_appointments %}
+                    <tr>
+                        <td scope="row">{{ appointment.first_name }} {{ appointment.last_name }}</td>
+                        <td scope="row">{{ appointment.room }}</td>
+                        <td scope="row">{{ appointment.hour }}
+                            on {{ appointment.day }}/{{ appointment.month }}/{{ appointment.year }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
                 <tr>
-                    <td scope="row">{{ appointment.first_name }} {{ appointment.last_name }}</td>
-                    <td scope="row">{{ appointment.room }}</td>
-                    <td scope="row">Hour: {{ appointment.hour }}
-                        on {{ appointment.day }}/{{ appointment.month }}/{{ appointment.year }}</td>
+                    <td colspan="3">You don't have an appointment yet.</td>
                 </tr>
-            {% endfor %}
-        {% else %}
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+    <h5>Past Treatments:</h5>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
             <tr>
-                <td colspan="3">You don't have an appointment yet.</td>
+                <th scope="col">Dentist</th>
+                <th scope="col">Room</th>
+                <th scope="col">Date</th>
+                <th scope="col">Charge</th>
+                <th scope="col">Action</th>
+                <th scope="col">Complaint</th>
+                <th scope="col">Medicine</th>
             </tr>
-        {% endif %}
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+            {% if past_appointments %}
+                {% for appointment in past_appointments %}
+                    <tr>
+                        <td scope="row">{{ appointment.first_name }} {{ appointment.last_name }}</td>
+                        <td scope="row">{{ appointment.room }}</td>
+                        <td scope="row">{{ appointment.hour }} {{ appointment.day }}/{{ appointment.month }}/{{ appointment.year }}</td>
+                        {% if not appointment.charge %}
+                            <td colspan="4">N/A</td>
+                        {% else %}
+                            <td scope="row">{{ appointment.charge }}</td>
+                            <td scope="row">{{ appointment.action }}</td>
+                            <td scope="row">{{ appointment.complaint }}</td>
+                            <td scope="row"><a href="./treatment-medicines-{{ appointment.treatment_id }}"
+                                               class="btn btn-primary">Medicines</a></td>
+                        {% endif %}
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">You don't have an appointment yet.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
 {% endblock %}

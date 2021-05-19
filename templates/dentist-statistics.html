@@ -1,0 +1,59 @@
+{% extends "_inner_layout.html" %}
+{% block title %}Dentist Statistics{% endblock %}
+{% block section %}
+    <h1>Dentist Statistics</h1>
+{% endblock %}
+{% block article %}
+    <h4>Welcome {{ session["full_name"] }},</h4>
+    <h5>Dentist who has most appointments: {{ most_appointment.first_name }} {{ most_appointment.last_name }}</h5>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Dentist</th>
+                <th scope="col">Appointments</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if appointment_ranking %}
+                {% for dentist in appointment_ranking %}
+                    <tr>
+                        <td scope="row">{{ dentist.first_name }} {{ dentist.last_name }}</td>
+                        <td scope="row">{{ dentist.magnitude }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">There isn't an appointment yet.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+
+    <h5>Dentist who has most treatments: {{ most_treatment.first_name }} {{ most_treatment.last_name }}</h5>
+    <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Dentist</th>
+                <th scope="col">Treatments</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% if treatment_ranking %}
+                {% for dentist in treatment_ranking %}
+                    <tr>
+                        <td scope="row">{{ dentist.first_name }} {{ dentist.last_name }}</td>
+                        <td scope="row">{{ dentist.magnitude }}</td>
+                    </tr>
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3">There isn't a treatment yet.</td>
+                </tr>
+            {% endif %}
+            </tbody>
+        </table>
+    </div>
+{% endblock %}
