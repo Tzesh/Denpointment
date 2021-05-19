@@ -9,7 +9,9 @@ from wtforms import Form, StringField, PasswordField, SelectField, DateField, va
 # User Registration Form
 class RegistrationForm(Form):
     ssn = StringField("SSN", validators=[validators.length(min=10, max=15),
-                                         validators.data_required(message="Please enter your SSN")])
+                                         validators.data_required(message="Please enter your SSN"),
+                                         validators.Regexp(regex='[0-9]',
+                                                           message="Invalid input please enter only digits")])
     email = StringField("Email", validators=[validators.length(min=8, max=50),
                                              validators.Email(message="Please enter a valid email")])
     first_name = StringField("First name", validators=[validators.length(min=4, max=50), validators.data_required(
