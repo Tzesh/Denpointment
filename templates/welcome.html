@@ -1,3 +1,6 @@
+<!-- Denpointment System
+github.com/Tzesh/Denpointment -->
+
 {% extends "_inner_layout.html" %}
 {% block title %}Welcome{% endblock %}
 {% block section %}
@@ -9,11 +12,12 @@
     {% if session["is_patient"] %}
         <p>You can use appointment menu to:</p>
         <ol>
-            <li>Book an appointment</li>
-            <li>To see your past appointments</li>
-            <li>To see your upcoming appointments</li>
+            <li>Book an appointment,</li>
+            <li>To see your past appointments,</li>
+            <li>To see your upcoming appointments.</li>
         </ol>
-    {% else %}
+    {% endif %}
+    {% if not session["is_patient"] and not session["is_dentist"] %}
         <p>You have to:</p>
         <ol>
             <li>Add your address information</li>
@@ -21,4 +25,14 @@
         </ol>
         <p>You can refer to <a href="./profile">profile</a> page to do these steps.</p>
     {% endif %}
+    {% if session["is_dentist"] %}
+        <p>You can use Treatments menu to:</p>
+        <ol>
+        <li>See your upcoming appointments,</li>
+        <li>Look for your today's appointments and add treatment information to them,</li>
+        <li>To search in past treatments.</li>
+        <p>Also you can use statistics menu to look statistics for dentists and patients.</p>
+        <p>Also you can look for or add your holiday dates in Holidays page.</p>
+    {% endif %}
+</ol>
 {% endblock %}

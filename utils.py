@@ -1,3 +1,6 @@
+# Denpointment System - Utils
+# github.com/Tzesh/Denpointment
+
 from flask import redirect, url_for, flash, session
 from functools import wraps
 
@@ -31,11 +34,3 @@ def check_is_patient(ssn, mysql):
     result_set = cursor.execute(query, (ssn,))
     cursor.close()
     return True if result_set else False
-
-
-# Check if 2 separate dates are in the same week
-def same_week(now, date):
-    if (date.year * 365 + date.month * 30 + date.day) - (now.year * 365 + now.month * 30 + now.day) > 7:
-        return False
-    else:
-        return True

@@ -1,3 +1,6 @@
+# Denpointment System - Main Application
+# github.com/Tzesh/Denpointment
+
 from flask import Flask, render_template, flash, redirect, url_for, session, request
 from flask_mysqldb import MySQL
 from passlib.handlers.sha2_crypt import sha256_crypt
