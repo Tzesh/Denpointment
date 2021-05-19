@@ -63,7 +63,7 @@ Denpointment system allows dentists to:
 ![Searching treatments](https://imgur.com/OdvMrZy.png)
 
 ## Holidays
-![Holidays](https://imgur.com/4A81i7r.png)
+![Holidays](https://imgur.com/jfNp0M6.png)
 ![Adding holiday](https://imgur.com/5iT12sA.png)
 
 ## Patient profiles
