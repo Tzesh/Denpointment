@@ -45,6 +45,9 @@ Denpointment system allows dentists to:
 5. Add holiday information, and of course to view upcoming and past holidays,
 6. Look for interesting statistics in the system, that can be either dentist statistics or patient statistics.
 
+## Dentist Login
+![Dentist Login](https://imgur.com/YbPIKcC.png)
+
 ## Upcoming Appointments
 ![Upcoming appointments](https://imgur.com/bHQpG6r.png)
 
