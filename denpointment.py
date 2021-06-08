@@ -521,7 +521,7 @@ def book_an_appointment():
             flash(message="You have an upcoming appointment, you can get another appointment after that one.",
                   category="danger")
             cursor.close()
-            return redirect(url_for("book_an_appointment"))
+            return redirect(url_for("my_appointments"))
 
         query = """
         SELECT dentists.dentist_id, dentists.room_number, persons.first_name, persons.last_name

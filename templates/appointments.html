@@ -63,8 +63,14 @@ github.com/Tzesh/Denpointment -->
                             <td scope="row">{{ appointment.charge }}</td>
                             <td scope="row">{{ appointment.action }}</td>
                             <td scope="row">{{ appointment.complaint }}</td>
-                            <td scope="row"><a href="./treatment-medicines-{{ appointment.treatment_id }}"
-                                               class="btn btn-primary">Medicines</a></td>
+                            <td scope="row">
+                                {% if appointment.medicine_id %}
+                                    <a href="./treatment-medicines-{{ appointment.treatment_id }}"
+                                       class="btn btn-primary">Medicines</a>
+                                {% else %}
+                                    Not assigned
+                                {% endif %}
+                            </td>
                         {% endif %}
                     </tr>
                 {% endfor %}
