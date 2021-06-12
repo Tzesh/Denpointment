@@ -544,11 +544,12 @@ def book_an_appointment():
             cursor = mysql.connection.cursor()
             dentist_id = form.dentist.data
             date = form.date.data
+            hour = form.hour.data
             today = datetime.today()
             if today.year != date.year or today.month != date.month or today.day > date.day:
                 flash(message="You only can get an appointment for this month.", category="danger")
                 return redirect(url_for("book_an_appointment"))
-            if today.year == date.year and today.month == date.month and today.day == date.day and datetime.now().hour > date.hour:
+            if today.year == date.year and today.month == date.month and today.day == date.day and datetime.now().hour > int(hour):
                 flash(message="You cannot get an appointment for a past time.", category="danger")
                 return redirect(url_for("book_an_appointment"))
             day = str(date.day).zfill(2)
