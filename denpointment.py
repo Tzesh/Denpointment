@@ -549,13 +549,10 @@ def book_an_appointment():
             if today.year != date.year or today.month != date.month or today.day > date.day:
                 flash(message="You only can get an appointment for this month.", category="danger")
                 return redirect(url_for("book_an_appointment"))
-            if today.year == date.year and today.month == date.month and today.day == date.day and datetime.now().hour > int(hour):
+            if today.year == date.year and today.month == date.month and today.day == date.day and datetime.now().hour > int(
+                    hour):
                 flash(message="You cannot get an appointment for a past time.", category="danger")
                 return redirect(url_for("book_an_appointment"))
-            day = str(date.day).zfill(2)
-            month = str(date.month).zfill(2)
-            year = date.year
-            hour = form.hour.data
 
             query = """
                     SELECT dentists.dentist_id, dentists.room_number, persons.first_name, persons.last_name
@@ -576,11 +573,12 @@ def book_an_appointment():
                     category="warning")
                 return redirect(url_for("my_appointments"))
             query = "SELECT * FROM appointments WHERE d_id = %s and `year` = %s and `month` = %s and `day` = %s and `hour` = %s"
-            result = cursor.execute(query, (dentist_name, year, month, day, hour))
+            result = cursor.execute(query, (dentist_id, date.year, date.month, date.day, hour))
             if result:
-                flash(message=dentist_name + " has already has an appointment on " + date + " " + hour,
+                flash(message=dentist_name + " has already an appointment on " + str(date.day) + "/" + str(
+                    date.month) + "/" + str(date.year) + " at " + hour,
                       category="danger")
-                return render_template("book-an-appointment.html", form=form)
+                return redirect(url_for("my_appointments"))
             query = "SELECT * FROM dentists WHERE dentist_id = %s"
             cursor.execute(query, (dentist_id,))
             dentist = cursor.fetchone()
@@ -590,14 +588,14 @@ def book_an_appointment():
             patient = cursor.fetchone()
             patient_id = patient["patient_id"]
             query = "INSERT INTO appointments(d_id, p_id, room, `hour`, `month`, `day`, `year`) VALUES(%s, %s, %s, %s, %s, %s, %s)"
-            cursor.execute(query, (dentist_id, patient_id, room, hour, month, day, year))
+            cursor.execute(query, (dentist_id, patient_id, room, hour, date.month, date.day, date.year))
             mysql.connection.commit()
             cursor.close()
             flash(message="Your appointment has been successfully booked", category="success")
             return redirect(url_for("my_appointments"))
         else:
             flash(message="Please fulfill the form", category="danger")
-            return render_template("book-an-appointment.html", form=form)
+            return redirect(url_for("my_appointments"))
 
 
 # Holidays
