@@ -1,5 +1,5 @@
 # Denpointment
-Fully-working dentist appointment system which is written in Python using Flask web development, powered by Bootstrap, using MySQL to manipulate data. It's based on a statement of work, developed first its own database and then application. Its database has much quite enough good mock data.
+A fully-working dentist appointment system which is written in Python using Flask web development, powered by Bootstrap, using MySQL to manipulate data. It's based on a statement of work, developed first its own database and then application. Its database has much quite enough good mock data.
 
 ## Main page of the system
 ![Index page](https://imgur.com/t6Hdc5k.png)
